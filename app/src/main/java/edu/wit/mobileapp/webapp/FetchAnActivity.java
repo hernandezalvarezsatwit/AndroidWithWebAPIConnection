@@ -28,8 +28,8 @@ public class FetchAnActivity extends AsyncTask<Void, Void, String> {
             URL url = new URL("https://www.boredapi.com/api/activity");
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             InputStream inputStream = connection.getInputStream();
-            if(inputStream==null)
-                return "Data is not fetched";
+            if(inputStream == null)
+                return "Data was not retrieved";
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             StringBuilder sb = new StringBuilder();
@@ -37,6 +37,7 @@ public class FetchAnActivity extends AsyncTask<Void, Void, String> {
                 sb.append(line);
             return sb.toString();
         } catch (Exception e) {
+            System.out.println("Problem loading the URL or establishing connection. Review method doInBackground");
             e.printStackTrace();
         }
         return null;
@@ -46,7 +47,7 @@ public class FetchAnActivity extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         progressBar.setVisibility(View.INVISIBLE);
-        if(s.equals("Data is not fetched"))
+        if(s.equals("Data was not retrieved"))
             activities.setText("Data is not fetched for some reason");
         else{
             try {
