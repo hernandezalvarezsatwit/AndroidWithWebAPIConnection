@@ -9,28 +9,19 @@ import android.graphics.Bitmap;
 public class Card {
 
     private Bitmap image;
-    private String title, description;
+    private String stockName;
+    private String stockInfo;
 
-    public Card(Bitmap image, String title, String description) {
+    public Card(Bitmap image, String stockName) {
         this.image = image;
-        this.title = title;
-        this.description = description;
+        this.stockName = stockName;
     }
 
-    //Getters
+    //Getters and setters
     public Bitmap getImage() { return image; }
-    public String getTitle() { return title; }
-    public String getDescription() { return description; }
-
-    public void setImage(Bitmap image) {
-        this.image = image;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public String getStockName() { return stockName; }
+    public String getStockInfo() { return stockInfo; }
+    public void setImage(Bitmap image) { this.image = image; }
+    public void setStockName(String stockName) { this.stockName = stockName; }
+    public void setStockInfo(String stockInfo) { this.stockInfo = stockInfo; }
 }

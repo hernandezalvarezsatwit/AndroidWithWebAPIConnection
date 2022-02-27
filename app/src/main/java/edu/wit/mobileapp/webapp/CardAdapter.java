@@ -39,10 +39,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
         //Set data in card
         void bindData(Card item){
-            FetchStock fetch = new FetchStock(descriptionTextV,"TSLA");
+            FetchStock fetch = new FetchStock(descriptionTextV,item.getStockName());
             fetch.execute();
             imageView.setImageBitmap(item.getImage());
-            titleTextV.setText(item.getTitle());
+            titleTextV.setText(item.getStockName());
             //descriptionTextV.setText(item.getDescription());
         }
     }
