@@ -19,11 +19,12 @@ public class MainActivity extends AppCompatActivity {
         activities = findViewById(R.id.activity_here);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(v -> showMeAnActivity(v));
+        showMeAnActivity();
+        //Button button = findViewById(R.id.button);
+        //button.setOnClickListener(v -> showMeAnActivity(v));
     }
 
-    private void showMeAnActivity(View view) {
+    private void showMeAnActivity() {
         progressBar.setVisibility(View.VISIBLE);
         FetchAnActivity faa = new FetchAnActivity(activities, progressBar);
         faa.execute();
