@@ -37,7 +37,8 @@ public class FetchStock extends AsyncTask<Void, Void, String> {
     }
 
     private static String getStockData(String company) {
-        String stockData = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="+company+"&interval=5min&outputsize=full&apikey=X5N8KPH4CUJ9C5YP";
+        String stockData = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol" +
+                "="+company+"&interval=5min&outputsize=full&apikey=X5N8KPH4CUJ9C5YP";
         Object obj = null;
         try {
             obj = new JSONParser().parse(getJsonFrom(stockData));

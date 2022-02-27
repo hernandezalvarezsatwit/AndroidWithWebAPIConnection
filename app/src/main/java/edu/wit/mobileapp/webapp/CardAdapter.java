@@ -43,7 +43,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             fetch.execute();
             imageView.setImageBitmap(item.getImage());
             titleTextV.setText(item.getStockName());
-            //descriptionTextV.setText(item.getDescription());
         }
     }
 

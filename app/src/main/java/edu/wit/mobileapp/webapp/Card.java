@@ -1,5 +1,4 @@
 package edu.wit.mobileapp.webapp;
-
 import android.graphics.Bitmap;
 
 /**

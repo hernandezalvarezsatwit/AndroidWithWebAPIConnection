@@ -8,6 +8,12 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This application allows the user to view his or her favorite stock data connecting the app
+ * The application gets stock information using Alpha Vantage's stock API
+ * It reads the JSON provided by the API and displays the results in a RecyclerView using CardView
+ * @author Samuel Hernandez
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,18 +23,21 @@ public class MainActivity extends AppCompatActivity {
         showCards();
     }
 
+    //Method creates and shows the cards
     private void showCards(){
-        Bitmap def = getImage(R.drawable.generic);
+        Bitmap def = getImage(R.drawable.generic);          //Default image
 
-        //Create list and populate it
+        //Create list of cards
         List<Card> cards = new ArrayList<>();
         cards.add(new Card(getImage(R.drawable.tesla), "TSLA"));
         cards.add(new Card(getImage(R.drawable.apple), "AAPL"));
-        cards.add(new Card(def, "FB"));
-        cards.add(new Card(def, "EBAY"));
-        cards.add(new Card(def, "MSFT"));
+        cards.add(new Card(getImage(R.drawable.fb), "FB"));
+        cards.add(new Card(getImage(R.drawable.ebay), "EBAY"));
+        cards.add(new Card(getImage(R.drawable.msft), "MSFT"));
         cards.add(new Card(def, "AMZN"));
         cards.add(new Card(def, "MELI"));
+
+        //TODO: Data to figure out issue of stock not loading
         cards.add(new Card(def, "MELI"));
         cards.add(new Card(def, "MELI"));
         cards.add(new Card(def, "MELI"));
@@ -47,5 +56,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    //Simple method, just to get an image easily
     private Bitmap getImage(int id){ return BitmapFactory.decodeResource(getResources(), id); }
 }
