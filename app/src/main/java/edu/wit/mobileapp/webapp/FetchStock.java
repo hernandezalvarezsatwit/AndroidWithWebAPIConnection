@@ -15,12 +15,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class fetchStock extends AsyncTask<Void, Void, String> {
+public class FetchStock extends AsyncTask<Void, Void, String> {
 
     private TextView textStockView;
     private String stockName;
 
-    public fetchStock(TextView textStockView, String stockName) {
+    public FetchStock(TextView textStockView, String stockName) {
         this.textStockView = textStockView;
         this.stockName = stockName;
     }

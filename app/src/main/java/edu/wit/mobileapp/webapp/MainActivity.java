@@ -16,10 +16,10 @@ public class MainActivity extends AppCompatActivity {
         TextView teslaCard = findViewById(R.id.teslaStockView);
         TextView appleCard = findViewById(R.id.appleStockView);
 
-        fetchStock fetch = new fetchStock(teslaCard, "TSLA");
+        FetchStock fetch = new FetchStock(teslaCard, "TSLA");
         fetch.execute();
 
-        fetch = new fetchStock(appleCard,"AAPL");
+        fetch = new FetchStock(appleCard,"AAPL");
         fetch.execute();
 
     }
