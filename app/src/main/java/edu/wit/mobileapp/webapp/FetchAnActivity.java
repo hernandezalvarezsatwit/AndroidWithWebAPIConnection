@@ -25,6 +25,8 @@ public class FetchAnActivity extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         try {
+            //Weather: https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=458514581d29fd64d5ba0ececf114335
+            //Stock: c8ddqliad3icuhjadat0
             URL url = new URL("https://www.boredapi.com/api/activity");
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             InputStream inputStream = connection.getInputStream();
