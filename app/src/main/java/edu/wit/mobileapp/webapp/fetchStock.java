@@ -1,12 +1,7 @@
 package edu.wit.mobileapp.webapp;
 
 import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.BufferedReader;
@@ -20,27 +15,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class FetchAnActivity extends AsyncTask<Void, Void, String> {
+public class fetchStock extends AsyncTask<Void, Void, String> {
 
-    TextView activities;
-    ProgressBar progressBar;
+    private TextView textStockView;
+    private String stockName;
 
-    public FetchAnActivity(TextView activities, ProgressBar progressBar) {
-        this.activities = activities;
-        this.progressBar = progressBar;
+    public fetchStock(TextView textStockView, String stockName) {
+        this.textStockView = textStockView;
+        this.stockName = stockName;
     }
 
     @Override
     protected String doInBackground(Void... voids) {
-        return getStockData("TSLA");
+        return getStockData(stockName);
     }
 
-    //This receives a string with th
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        progressBar.setVisibility(View.INVISIBLE);
-        activities.setText(s);
+        textStockView.setText(s);
     }
 
 
@@ -72,17 +65,16 @@ public class FetchAnActivity extends AsyncTask<Void, Void, String> {
         org.json.simple.JSONObject refreshedData = (org.json.simple.JSONObject) obj2;
         String open = "Not Available";
         String temp = refreshedData.get("1. open").toString();
-        if(temp != null)
+        if(!temp.equals(""))
             open = temp;
 
         String close = "Not Available";
         String temp2 = refreshedData.get("4. close").toString();
-        if(temp2 != null)
+        if(!temp2.equals(""))
             close = temp2;
 
-        StringBuilder data = new StringBuilder("Symbol: ");
-        data.append(symbol+"\n"); data.append("Open: "+open+"\n"); data.append("Close: "+close);
-        return data.toString();
+        String result = "Symbol: " + symbol + "\n" + "Open: " + open + "\n" + "Close: " + close;
+        return result;
     }
 
     private static String getJsonFrom(String link) throws IOException {
@@ -100,7 +92,7 @@ public class FetchAnActivity extends AsyncTask<Void, Void, String> {
         HttpURLConnection connection = null;
         try {
             connection = (HttpURLConnection) url.openConnection();
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("---> HTTP Connection Problem");
             //Log.v("myApp", "HTTP Connection Problem");
             e.printStackTrace();
@@ -110,7 +102,7 @@ public class FetchAnActivity extends AsyncTask<Void, Void, String> {
         InputStream inputStream = null;
         try {
             inputStream = connection.getInputStream();
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("---> Input Stream Problem");
             //Log.v("myApp", "Input Stream Problem");
             e.printStackTrace();
@@ -128,6 +120,8 @@ public class FetchAnActivity extends AsyncTask<Void, Void, String> {
         while((line = br.readLine()) != null)
             sb.append(line);
 
+        br.close();
+        inputStream.close();
         return sb.toString();
     }
 }
