@@ -5,16 +5,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,8 +18,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.net.ssl.HttpsURLConnection;
 
 
 public class FetchAnActivity extends AsyncTask<Void, Void, String> {
@@ -39,46 +32,17 @@ public class FetchAnActivity extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... voids) {
-        try {
-            //Alpha Stock key: X5N8KPH4CUJ9C5YP
-            String stock = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&outputsize=full&apikey=X5N8KPH4CUJ9C5YP";
-            URL url = new URL(stock);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            InputStream inputStream = connection.getInputStream();
-            if(inputStream == null) {
-                Log.v("myApp", "Not retrieved");
-                return "Data was not retrieved";
-            }
-            Log.v("myApp", "retrieved");
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            StringBuilder sb = new StringBuilder();
-            while((line=br.readLine()) != null)
-                sb.append(line);
-            return sb.toString();
-        } catch (Exception e) {
-            System.out.println("Problem loading the URL or establishing connection. Review method doInBackground");
-            e.printStackTrace();
-        }
-        return null;
+        return getStockData("TSLA");
     }
 
+    //This receives a string with th
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         progressBar.setVisibility(View.INVISIBLE);
-        if(s.equals("Data was not retrieved"))
-            activities.setText("Data is not fetched for some reason");
-        else{
-            try {
-                JSONObject root = new JSONObject(s);
-                String activity = root.getString("Meta Data");
-                activities.setText(activity);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        activities.setText(s);
     }
+
 
     private static String getStockData(String company) {
         String stockData = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="+company+"&interval=5min&outputsize=full&apikey=X5N8KPH4CUJ9C5YP";
