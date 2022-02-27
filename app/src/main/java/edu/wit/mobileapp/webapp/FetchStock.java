@@ -48,9 +48,9 @@ public class FetchStock extends AsyncTask<Void, Void, String> {
         }
         org.json.simple.JSONObject jo = (org.json.simple.JSONObject) obj;
         Map stockHeader = (HashMap) jo.get("Meta Data");
-        String symbol = stockHeader.get("2. Symbol").toString();
+        if(stockHeader == null)
+            return "Data not available";
         String last = stockHeader.get("3. Last Refreshed").toString();
-
         Map stockPrices = (HashMap) jo.get("Time Series (5min)");
         String lastData = stockPrices.get(last).toString();
         Object obj2 = null;

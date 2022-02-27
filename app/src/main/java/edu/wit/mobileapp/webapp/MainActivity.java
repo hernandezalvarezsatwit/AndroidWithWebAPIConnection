@@ -18,15 +18,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showCards(){
-        Bitmap defaultImage = BitmapFactory.decodeResource(getResources(), R.drawable.cat);
+        Bitmap def = getImage(R.drawable.generic);
 
         //Create list and populate it
         List<Card> cards = new ArrayList<>();
-        Card card = new Card(defaultImage, "TSLA");
-        Card card2 = new Card(defaultImage, "AAPL");
-
-        cards.add(card);
-        cards.add(card2);
+        cards.add(new Card(getImage(R.drawable.tesla), "TSLA"));
+        cards.add(new Card(getImage(R.drawable.apple), "AAPL"));
+        cards.add(new Card(def, "FB"));
+        cards.add(new Card(def, "EBAY"));
+        cards.add(new Card(def, "MSFT"));
+        cards.add(new Card(def, "AMZN"));
+        cards.add(new Card(def, "MELI"));
+        cards.add(new Card(def, "MELI"));
+        cards.add(new Card(def, "MELI"));
+        cards.add(new Card(def, "MELI"));
+        cards.add(new Card(def, "MELI"));
+        cards.add(new Card(def, "MELI"));
+        cards.add(new Card(def, "MELI"));
+        cards.add(new Card(def, "MELI"));
 
         //Create manager, adapter, pass the list of cards
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -37,4 +46,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
     }
+
+    private Bitmap getImage(int id){ return BitmapFactory.decodeResource(getResources(), id); }
 }
