@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!--Image View Space-->
+        Image View Space
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="120dip"
@@ -45,6 +45,8 @@
                 android:text="Description"
                 android:textSize="16sp"
                 android:paddingRight="16dp"/>
+
+
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

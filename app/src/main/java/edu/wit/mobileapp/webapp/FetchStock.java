@@ -36,7 +36,6 @@ public class FetchStock extends AsyncTask<Void, Void, String> {
         textStockView.setText(s);
     }
 
-
     private static String getStockData(String company) {
         String stockData = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="+company+"&interval=5min&outputsize=full&apikey=X5N8KPH4CUJ9C5YP";
         Object obj = null;
@@ -73,7 +72,7 @@ public class FetchStock extends AsyncTask<Void, Void, String> {
         if(!temp2.equals(""))
             close = temp2;
 
-        String result = "Symbol: " + symbol + "\n" + "Open: " + open + "\n" + "Close: " + close;
+        String result = "Open: " + open + "\n" + "Close: " + close;
         return result;
     }
 
