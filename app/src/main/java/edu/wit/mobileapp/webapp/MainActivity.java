@@ -10,8 +10,11 @@ import java.util.List;
 
 /**
  * This application allows the user to view his or her favorite stock data connecting the app
- * The application gets stock information using Alpha Vantage's stock API
+ * The application gets stock information using Alpha Vantage's stock API. It displays the
+ * open and close values for the most recent period of 60 minutes available on the API.
  * It reads the JSON provided by the API and displays the results in a RecyclerView using CardView
+ * Notice Alpha non-premium API allows only for 5 requests per minute. That is the reason for
+ * "Data not available" message. Could be solved by paying for premium version.
  * @author Samuel Hernandez
  */
 public class MainActivity extends AppCompatActivity {

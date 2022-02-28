@@ -2,6 +2,7 @@ package edu.wit.mobileapp.webapp;
 
 import android.os.AsyncTask;
 import android.widget.TextView;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.BufferedReader;
@@ -9,13 +10,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * This class extends AsyncTask to fetch resources from the web using an API
+ * It fetches information about a stock and puts it into a textView object.
  * @author Samuel Hernandez
  */
 public class FetchStock extends AsyncTask<Void, Void, String> {
@@ -28,104 +30,64 @@ public class FetchStock extends AsyncTask<Void, Void, String> {
         this.stockName = stockName;
     }
 
+    //Service: In background get te data
     @Override
     protected String doInBackground(Void... voids) {
-        return getStockData(stockName);
+        try { return getStockData(stockName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error. Verify internet connection";
+        }
     }
 
+    //After getting data set the textView with the result
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         textStockView.setText(s);
     }
 
-    private static String getStockData(String company) {
-        String stockData = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol" +
-                "="+company+"&interval=5min&outputsize=full&apikey=X5N8KPH4CUJ9C5YP";
-        Object obj = null;
-        try {
-            obj = new JSONParser().parse(getJsonFrom(stockData));
-        } catch (ParseException | IOException e) {
-            System.out.println("---> Problem parsing JSON of stockData or Buffer Reader error");
-            //Log.v("myApp", "Problem parsing JSON of stockData or Buffer Reader error");
-            e.printStackTrace();
-        }
-        org.json.simple.JSONObject jo = (org.json.simple.JSONObject) obj;
-        Map stockHeader = (HashMap) jo.get("Meta Data");
-        if(stockHeader == null)
-            return "Data not available";
+    /**
+     * This method gets stock information for a given company. It first creates the URL with the
+     * company name, and then calls {@link #getJsonFrom(String)} to get data in JSON form from url
+     * Lastly, it extracts the desired information in the JSON and creates a formatted
+     * string that will be used to display in the app.
+     * @param company the name of the company to get the stock information
+     * @return the formatted string to set in the textView
+     */
+    private static String getStockData(String company) throws IOException, ParseException {
+        //Create url
+        String url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol" +
+                "="+company+"&interval=60min&outputsize=full&apikey=X5N8KPH4CUJ9C5YP";
+        //Parse json retrieved from url
+        JSONObject json = (JSONObject) new JSONParser().parse(getJsonFrom(url));
+
+        //Get desired data for string
+        Map stockHeader = (HashMap) json.get("Meta Data");
+        if(stockHeader == null) return "Data not available";
         String last = stockHeader.get("3. Last Refreshed").toString();
-        Map stockPrices = (HashMap) jo.get("Time Series (5min)");
+        Map stockPrices = (HashMap) json.get("Time Series (60min)");
         String lastData = stockPrices.get(last).toString();
-        Object obj2 = null;
-        try {
-            obj2 = new JSONParser().parse(lastData);
-        } catch (ParseException e) {
-            System.out.println("---> Problem parsing JSON of last prices of stock");
-            //Log.v("myApp", "Problem parsing JSON of last prices of stock");
-            e.printStackTrace();
-        }
-        org.json.simple.JSONObject refreshedData = (org.json.simple.JSONObject) obj2;
-        String open = "Not Available";
-        String temp = refreshedData.get("1. open").toString();
-        if(!temp.equals(""))
-            open = temp;
-
-        String close = "Not Available";
-        String temp2 = refreshedData.get("4. close").toString();
-        if(!temp2.equals(""))
-            close = temp2;
-
-        String result = "Open: " + open + "\n" + "Close: " + close;
-        return result;
+        json = (JSONObject) new JSONParser().parse(lastData);
+        String open = json.get("1. open").toString();
+        String close = json.get("4. close").toString();
+        return "Open: " + open + "\n" + "Close: " + close;
     }
 
+    //Method connects to internet,gets input stream, and puts it into a string
     private static String getJsonFrom(String link) throws IOException {
-        //Retrieve info from URL
-        URL url = null;
-        try {
-            url = new URL(link);
-        } catch (MalformedURLException e) {
-            System.out.println("---> URL not retrieved correctly. URL: "+link);
-            //Log.v("myApp", "URL not retrieved correctly. URL: "+link);
-            e.printStackTrace();
-        }
-
-        //HTTP Connect
-        HttpURLConnection connection = null;
-        try {
-            connection = (HttpURLConnection) url.openConnection();
-        } catch (Exception e) {
-            System.out.println("---> HTTP Connection Problem");
-            //Log.v("myApp", "HTTP Connection Problem");
-            e.printStackTrace();
-        }
-
-        //Get Input stream
-        InputStream inputStream = null;
-        try {
-            inputStream = connection.getInputStream();
-        } catch (Exception e) {
-            System.out.println("---> Input Stream Problem");
-            //Log.v("myApp", "Input Stream Problem");
-            e.printStackTrace();
-        }
-        if(inputStream == null) {
-            System.out.println("---> Data was not retrieved");
-            //Log.v("myApp", "Data was not retrieved"");
-            return "Data was not retrieved";
-        }
+        URL url = new URL(link);                                                 //Retrieve url
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection(); //HTTP Connect
+        InputStream inputStream = connection.getInputStream();                   //Get Input stream
 
         //Get information into string
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while((line = br.readLine()) != null)
-            sb.append(line);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String data = reader.lines().collect(Collectors.joining());
 
-        br.close();
+        //Close resources
+        reader.close();
         inputStream.close();
         connection.disconnect();
-        return sb.toString();
+        return data;
     }
 }

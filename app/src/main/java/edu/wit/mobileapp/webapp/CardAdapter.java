@@ -24,6 +24,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         list = itemsList;
     }
 
+    //View Holder class to create custom object to return with RecyclerView's onCreateViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView imageView;
@@ -36,8 +37,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             titleTextV = view.findViewById(R.id.titleView);
             descriptionTextV = view.findViewById(R.id.descriptionView);
         }
-
-        //Set data in card
+        //Fetch data, execute, and set data
         void bindData(Card item){
             FetchStock fetch = new FetchStock(descriptionTextV,item.getStockName());
             fetch.execute();
@@ -51,12 +51,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         View view = inflater.inflate(R.layout.card_layout, null);
         return new ViewHolder(view);
     }
-
     //Binds a card given by position
     public void onBindViewHolder(CardAdapter.ViewHolder holder, int position){
         holder.bindData(list.get(position));
     }
-
     //Get size of list
     public int getItemCount(){
         return list.size();
