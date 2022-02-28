@@ -14,7 +14,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * This class extends AsyncTask to fetch resources from the web using an API
+ * @author Samuel Hernandez
+ */
 public class FetchStock extends AsyncTask<Void, Void, String> {
 
     private TextView textStockView;
@@ -122,6 +125,7 @@ public class FetchStock extends AsyncTask<Void, Void, String> {
 
         br.close();
         inputStream.close();
+        connection.disconnect();
         return sb.toString();
     }
 }

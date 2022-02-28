@@ -34,17 +34,13 @@ public class MainActivity extends AppCompatActivity {
         cards.add(new Card(getImage(R.drawable.fb), "FB"));
         cards.add(new Card(getImage(R.drawable.ebay), "EBAY"));
         cards.add(new Card(getImage(R.drawable.msft), "MSFT"));
-        cards.add(new Card(def, "AMZN"));
-        cards.add(new Card(def, "MELI"));
-
-        //TODO: Data to figure out issue of stock not loading
-        cards.add(new Card(def, "MELI"));
-        cards.add(new Card(def, "MELI"));
-        cards.add(new Card(def, "MELI"));
-        cards.add(new Card(def, "MELI"));
-        cards.add(new Card(def, "MELI"));
-        cards.add(new Card(def, "MELI"));
-        cards.add(new Card(def, "MELI"));
+        cards.add(new Card(getImage(R.drawable.amzn), "AMZN"));
+        cards.add(new Card(getImage(R.drawable.tesla), "TSLA"));
+        cards.add(new Card(getImage(R.drawable.apple), "AAPL"));
+        cards.add(new Card(getImage(R.drawable.fb), "FB"));
+        cards.add(new Card(getImage(R.drawable.ebay), "EBAY"));
+        cards.add(new Card(getImage(R.drawable.msft), "MSFT"));
+        cards.add(new Card(getImage(R.drawable.amzn), "AMZN"));
 
         //Create manager, adapter, pass the list of cards
         LinearLayoutManager manager = new LinearLayoutManager(this);

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 /**
- * This class creates an adapter for the CardView to use
+ * This class creates an adapter for the CardView to use to display all the cards
  * @author Samuel Hernandez
  */
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
