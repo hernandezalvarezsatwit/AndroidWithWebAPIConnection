@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
         showCards();
     }
 
@@ -37,13 +37,12 @@ public class MainActivity extends AppCompatActivity {
         cards.add(new Card(getImage(R.drawable.fb), "FB"));
         cards.add(new Card(getImage(R.drawable.ebay), "EBAY"));
         cards.add(new Card(getImage(R.drawable.msft), "MSFT"));
-        cards.add(new Card(getImage(R.drawable.amzn), "AMZN"));
-        cards.add(new Card(getImage(R.drawable.tesla), "TSLA"));
-        cards.add(new Card(getImage(R.drawable.apple), "AAPL"));
-        cards.add(new Card(getImage(R.drawable.fb), "FB"));
-        cards.add(new Card(getImage(R.drawable.ebay), "EBAY"));
-        cards.add(new Card(getImage(R.drawable.msft), "MSFT"));
-        cards.add(new Card(getImage(R.drawable.amzn), "AMZN"));
+        cards.add(new Card(def, "GOOG"));
+        cards.add(new Card(def, "NVDA"));
+        cards.add(new Card(def, "PYPL"));
+        cards.add(new Card(def, "INTC"));
+        cards.add(new Card(def, "ADBE"));
+        cards.add(new Card(def, "AMZN"));
 
         //Create manager, adapter, pass the list of cards
         LinearLayoutManager manager = new LinearLayoutManager(this);
