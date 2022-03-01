@@ -39,10 +39,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         }
         //Fetch data, execute, and set data
         void bindData(Card item){
-            FetchStock fetch = new FetchStock(descriptionTextV,item.getStockName());
-            fetch.execute();
-            imageView.setImageBitmap(item.getImage());
-            titleTextV.setText(item.getStockName());
+            if(descriptionTextV.getText().equals("Loading...")){
+                FetchStock fetch = new FetchStock(descriptionTextV, item.getStockName());
+                fetch.execute();
+                imageView.setImageBitmap(item.getImage());
+                titleTextV.setText(item.getStockName());
+            }
         }
     }
 
